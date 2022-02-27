@@ -5,8 +5,10 @@ const fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = () => { 
-    inquirer 
-        .prompt([
+    
+    let answers = [];
+
+    return inquirer.prompt([
             {
                 type: "input",
                 name: "github",
@@ -79,16 +81,9 @@ const questions = () => {
                 }
             },
             {
-                type: "confirm",
-                name: "usage",
-                message: "Would a user need addition infomation to run your project?",
-                default: true
-            },
-            {
                 type: "input",
                 name: "userUsage",
                 message: "Provide additional user information.",
-                when: ({userUsage}) => userUsage
             },
             {
                 type: "input",
@@ -109,7 +104,7 @@ const questions = () => {
                 }
             },
             {
-                type: "checkbox",
+                type: "list",
                 name: "license",
                 message: "What license would want to apply this project? (Required)" ,
                 choices: ["MIT", "Apache 2.0", "GPL 3.0", "BSD 3", "None"],
@@ -136,6 +131,7 @@ const questions = () => {
                 }
             }
         ])
+
 }
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
@@ -158,8 +154,13 @@ function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 function init() {
-    inquirer.prompt(questions)
+
+    questions()
+    .catch(err => {
+        console.log(err);
+    });
 }
 
 // Function call to initialize app
 init();
+
