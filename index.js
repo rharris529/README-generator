@@ -4,11 +4,11 @@ const generateMarkdown = require("./utils/generateMarkdown.js");
 const fs = require('fs');
 
 // TODO: Create an array of questions for user input
-const questions = () => { 
-    
-    let answers = [];
+const questions = []; 
 
-    return inquirer.prompt([
+const promptUser = () => {
+
+return inquirer.prompt([
             {
                 type: "input",
                 name: "github",
@@ -131,34 +131,28 @@ const questions = () => {
                 }
             }
         ])
+        .then((data) => {
+            console.log("=== User's Answers are: \n", data);
+            questions.map(data);
+            console.log(questions.map(data));
+        });      
+    }
 
-}
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/README.md', fileName, data, err =>{
-            // if error, reject and send error to .catch method
-            if (err) {
-                reject(err);
-                return;
-            }
+function writeToFile(license, data) {
 
-            // if good, resolve and print message to console
-            resolve({
-                ok: true,
-                message: "README created!"
-            });
-        });
-    });    
+        license = questions.filter(license);
+
+        data = questions[i];
+
+        fs.writeFile('./dist/README.md', generateMarkdown(license, data), err =>{
+            console.log(answers);
+        });    
 };
 
 // TODO: Create a function to initialize app
 function init() {
-
-    questions()
-    .catch(err => {
-        console.log(err);
-    });
+promptUser();
 }
 
 // Function call to initialize app
