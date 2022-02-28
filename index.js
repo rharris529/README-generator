@@ -133,8 +133,6 @@ return inquirer.prompt([
         ])
         .then((data) => {
             console.log("=== User's Answers are: \n", data);
-            questions.map(data);
-            console.log(questions.map(data));
         });      
     }
 
@@ -145,7 +143,10 @@ function writeToFile(license, data) {
 
         data = questions[i];
 
-        fs.writeFile('./dist/README.md', generateMarkdown(license, data), err =>{
+        fs.writeFile('./dist/README.md', err =>{
+            if (err) {
+                console.log(err);
+            }
             console.log(answers);
         });    
 };
